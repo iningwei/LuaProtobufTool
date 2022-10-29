@@ -1,0 +1,8 @@
+C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\bin\Debug\LuaProtobufTool.exe.config
+C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\bin\Debug\LuaProtobufTool.exe
+C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\bin\Debug\LuaProtobufTool.pdb
+C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.csproj.AssemblyReference.cache
+C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.csproj.SuggestedBindingRedirects.cache
+C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.csproj.CoreCompileInputs.cache
+C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.exe
+C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.pdb

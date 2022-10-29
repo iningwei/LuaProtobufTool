@@ -1,0 +1,24 @@
+syntax = "proto3";
+option go_package = "./;common";
+package commons;
+
+// 空数据
+message PbEmptyMsg {
+
+}
+
+// 服务器返回用户关闭
+message PbClinetCloseMsg {
+  uint32 result = 1; // 返回信息
+  uint32 uid    = 2; // 玩家ID
+}
+
+// 点对点推送 枚举
+enum PTPResp {
+  PTP_AVATAR_TIME_OUT = 0; // 用户装扮到期
+}
+
+// 点对点推送
+message PbRolePTPPushResp {
+  PTPResp Types = 1;
+}

@@ -1,0 +1,66 @@
+syntax = "proto3";
+option go_package = "./;common";
+package game;
+
+// 获取手机验证码
+message C2SVerificationCodeReq {
+  string phone = 1; // 电话号码
+}
+
+// 返回获取的验证码
+message S2CVerificationCodeResp {
+  bool result = 1; // 是否获取成功
+}
+
+// 用户登录枚举值
+enum LoginRetReq
+{
+  Q_ACCOUNT = 0; // 账号登录
+  Q_WECHAT  = 1; // 微信登录
+  Q_PHONE   = 2; // 电话号码登录
+}
+// 用户登录
+message C2SMsgLoginReq
+{
+  string      account   = 1; // 账号/微信号/电话号码
+  LoginRetReq loginType = 2; // 登录类型 [ 必填 ]
+  string verification   = 3; // 验证码 [ 非必填 ]
+  string password       = 4; // 密码 [ 必填 微信/电话号码 为成功返回的密码 ]
+}
+
+// 用户登录返回枚举值
+enum LoginRetResp
+{
+  RR_ERROR             = 0; // 错误
+  RR_SERVER_BUSY       = 1;
+  RR_NO_ROLE           = 2; // 没有角色
+  RR_SENSITIVEWORDS    = 3; // 敏感词
+  RR_SAME_NAME         = 4; // 重名
+  RR_ACCOUNT_PASSWORDS = 5; // 账号或者密码错误
+  RR_VERIFICATION      = 6; // 验证码错误
+  RR_PHONENUMBER       = 7; // 手机号码格式错误
+  RR_ACCOUNTEMPT       = 8; // 账号为空
+  RR_PASSEMPTY         = 9; // 密码为空
+  RR_SUCCESS           = 10;// 成功
+}
+
+// 服务器返回登录信息
+message S2CMsgLoginResp {
+  LoginRetResp          result        = 1;        //登录错误枚举
+  uint32                uId           = 2;        //玩家id
+  string                account       = 3;        //玩家账号
+  string                password      = 4;        //登录密码
+  string                wechat        = 5;        //微信账号
+  string                phone         = 6;        //电话号码
+}
+
+// 服务器返回客户端IP
+message S2CGetCliIPResp {
+  string cliIp = 1; // 玩家IP
+}
+
+// 服务器返回默认服装
+message S2CDefaultClothing {
+  repeated uint32 Men    = 1; // 默认男服装list
+  repeated uint32 Female = 2; // 默认女装list
+}
