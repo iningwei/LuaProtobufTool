@@ -6,3 +6,11 @@ C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.c
 C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.csproj.CoreCompileInputs.cache
 C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.exe
 C:\MetaProject\proto\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.pdb
+E:\MyGitHub\LuaProtobufTool\LuaProtobufTool\bin\Debug\LuaProtobufTool.exe.config
+E:\MyGitHub\LuaProtobufTool\LuaProtobufTool\bin\Debug\LuaProtobufTool.exe
+E:\MyGitHub\LuaProtobufTool\LuaProtobufTool\bin\Debug\LuaProtobufTool.pdb
+E:\MyGitHub\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.csproj.AssemblyReference.cache
+E:\MyGitHub\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.csproj.SuggestedBindingRedirects.cache
+E:\MyGitHub\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.csproj.CoreCompileInputs.cache
+E:\MyGitHub\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.exe
+E:\MyGitHub\LuaProtobufTool\LuaProtobufTool\obj\Debug\LuaProtobufTool.pdb
