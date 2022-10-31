@@ -39,9 +39,33 @@ namespace LuaProtobufTool.Writer
                     for (int j = 0; j < entity.allLines.Count; j++)
                     {
                         var line = entity.allLines[j];
-                        if (line.StartsWith("enum"))
+                        if (line.StartsWith("enum") && line.StartsWith("enums") == false)
                         {
-                            line = line.Remove(0, 4);
+                            Console.WriteLine("write enum:::"+line);
+                            //去除enum符号
+                            line = line.Remove(0, 4).Trim();
+                            if (line.Contains("PbRoleRetResp"))
+                            {
+                                var a = 1;
+                            }
+                            //枚举名称后面要添加=
+                            int enumNameEndIndex = line.IndexOf(' ');
+                            if (enumNameEndIndex == -1)
+                            {
+                                //情形1， 结构如：enum xxx{
+                                //情形2， 结构如：enum xxx
+                                if (line.Contains("{"))
+                                {
+                                    enumNameEndIndex = line.IndexOf("{");
+                                }
+                                else
+                                {
+                                    enumNameEndIndex = line.Length;
+                                }
+                            }
+
+                            line = line.Insert(enumNameEndIndex, "=");
+
                         }
                         line = line.Replace("//", "--");
                         if (j == entity.allLines.Count - 1)

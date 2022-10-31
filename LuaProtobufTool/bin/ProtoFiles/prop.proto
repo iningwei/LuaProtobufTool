@@ -1,44 +1,21 @@
 ﻿syntax = "proto3";
 option go_package = "./;common";
+import "enum.proto";
+import "common.proto";
 package prop;
-
-// 通用道具结构
-message PbItem {
-  uint32 Uid      = 1; // 道具唯一ID
-  uint32 Id       = 2; // 道具配置ID
-  uint32 Number   = 3; // 道具数量
-  uint32 Times    = 4; // 道具有效期[0:没有时效 1:赛季道具 >1:时效时间]
-  uint32 Durable  = 5; // 道具耐久度[0:没有耐久度 >0:当前耐久度]
-}
-
-// 装扮信息
-message PbDress {
-  uint32 itemID          = 1; // 物品ID
-  uint32 childId         = 2; // 子ID
-  uint32 number          = 3; // 物品数量
-  uint32 durable         = 4; // 剩余耐久度
-  uint32 typeOfExistence = 5; // 装扮存在类型 0 没有类型 1 赛季 >1 秒
-  uint32 startTime       = 6; // 开始时间 [ 赛季：开始时间  秒：获取时间 ]
-  uint32 endTime         = 7; // 结束时间 [ 赛季：结束时间  秒：到期时间 ]
-  uint32 star            = 8; // 星级
-  uint32 level           = 9; // 级别
-  repeated uint32 up     = 10;// 上限
-  repeated uint32 down   = 11;// 下限
-  bool   isDressUp       = 12;// 是否已经装扮
-  bool   isNew           = 13;// 是否是新获得
-}
 
 // 道具信息更新推送
 message S2CMsgUserItemsUpdate {
-  repeated PbItem addCurs      = 1; // 增加的货币
-  repeated PbItem upCurs       = 2; // 更新的货币
+  repeated commons.PbItem addCurs      = 1; // 增加的货币
+  repeated commons.PbItem upCurs       = 2; // 更新的货币
   repeated uint32 delCurs      = 3; // 删除的货币
-  repeated PbItem addItems     = 4; // 增加的道具
-  repeated PbItem upItems      = 5; // 更新的道具
+  repeated commons.PbItem addItems     = 4; // 增加的道具
+  repeated commons.PbItem upItems      = 5; // 更新的道具
   repeated uint32 delItems     = 6; // 删除的道具
-  repeated PbDress addDress    = 7; // 增加的装备
-  repeated PbDress upDress     = 8; // 更新的装备
+  repeated commons.PbDress addDress = 7; // 增加的装备
+  repeated commons.PbDress upDress  = 8; // 更新的装备
   repeated uint32  delDress    = 9; // 删除的装备
+  repeated uint32  addLst      = 10;// 增加列表
 }
 
 // 道具和合成
@@ -46,16 +23,64 @@ message C2SMergeItemReq {
   uint32 mergeId = 1;// 需要合成的ID
 }
 
-// 合成枚举值
-enum PbMergeResp {
-  MERGE_ACCESS            = 0; // 合成成功
-  MERGE_ITEM_NUMBER_ERROR = 1; // 合成碎片不足
-  MERGE_FAIL              = 2; // 合成失败
-  MERGE_MERGE_ID_ERROR    = 3; // 合成ID错误
-  MERGE_DEL_ITEM_ERROR    = 4; // 删除已经合成的碎片失败
-}
 
 // 返回道具合成结果
 message S2CMergeItemResp {
-    PbMergeResp result = 1; // 合成状态
+    enums.PbMergeResp result = 1; // 合成状态
+}
+
+// 道具出售
+message C2SMsgBagSellItemReq
+{
+  repeated uint32 list = 1; // 出售的物品列表[物品uid,物品id]
+}
+
+message S2CMsgBagSellItemResp
+{
+    enums.PropRetResp   result  = 1; // 结果
+}
+
+// 道具使用
+message C2SMsgBagUseItemReq
+{
+  repeated uint32 list  = 1; // 使用的物品[物品uid,物品id,物品数量]
+           uint32 index = 2; // 选择的奖励序号[自选奖励使用]
+}
+
+message S2CMsgBagUseItemResp
+{
+  enums.PropRetResp   result  = 1; // 结果
+}
+
+// 道具分解
+message C2SMsgBagSplitItemReq
+{
+  repeated uint32 list = 1; // 分解的物品列表[物品uid,物品id]
+}
+
+message S2CMsgBagSplitItemResp
+{
+  enums.PropRetResp   result  = 1; // 结果
+}
+
+// 道具解锁
+message C2SMsgBagUnlockItemReq
+{
+  repeated uint32 list = 1; // 解锁的物品[物品uid,物品id]
+}
+
+message S2CMsgBagUnlockItemResp
+{
+  enums.PropRetResp   result  = 1; // 结果
+}
+
+// 清除背包红点
+message C2SMsgBagRedPointClearReq
+{
+
+}
+
+message S2CMsgBagRedPointClearResp
+{
+  enums.PropRetResp   result  = 1; // 结果
 }

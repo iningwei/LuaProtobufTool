@@ -28,13 +28,17 @@ namespace LuaProtobufTool.Reader
                 {
                     var line = lines[i];
                     line = line.Trim();
+                    anotationIndex = -1;
                     isEnum = false;
 
-                    if (line != "" && (line.StartsWith("message") || line.StartsWith("enum")))
+                    //规避外部嵌套类命名为enums的情况
+                    if (line != "" && (line.StartsWith("message") || (line.StartsWith("enum") && line.StartsWith("enums") == false)))
                     {
                         if (line.StartsWith("enum"))
                         {
                             isEnum = true;
+                            Console.WriteLine("----------> enum:::" + line);
+
                         }
 
 
@@ -42,7 +46,7 @@ namespace LuaProtobufTool.Reader
                         var seps = line.Split(' ');
                         for (int k = 1; k < seps.Length; k++)
                         {
-                            if(seps[k].Trim()!="")
+                            if (seps[k].Trim() != "")
                             {
                                 entityName = seps[k].Trim();
                                 if (entityName.EndsWith("{"))
@@ -52,8 +56,8 @@ namespace LuaProtobufTool.Reader
                                 break;
                             }
                         }
-                        
-                       
+
+
 
                         entityStartIndex = i;
                         //向上找到注释
@@ -89,7 +93,7 @@ namespace LuaProtobufTool.Reader
                         ProtoEntity entity = new ProtoEntity();
                         entity.isEnum = isEnum;
                         entity.entityName = entityName;
-                        for (int p = anotationIndex != -1 ? anotationIndex : entityStartIndex; p <= entityEndIndex; p++)
+                        for (int p = (anotationIndex != -1 ? anotationIndex : entityStartIndex); p <= entityEndIndex; p++)
                         {
                             var content = lines[p];
                             //去除content中的嵌套类结构
