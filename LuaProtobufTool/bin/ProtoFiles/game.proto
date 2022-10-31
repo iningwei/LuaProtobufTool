@@ -1,47 +1,56 @@
 syntax = "proto3";
 option go_package = "./;common";
-import "enum.proto";
+import "enumeration.proto";
 package game;
 
 // 获取手机验证码
+// C2S_MsgID=1@5
 message C2SVerificationCodeReq {
   string phone = 1; // 电话号码
 }
 
 // 返回获取的验证码
+// S2C_MsgID=1@104
 message S2CVerificationCodeResp {
   bool result = 1; // 是否获取成功
 }
 
-
 // 用户登录
+// C2S_MsgID=100@1
 message C2SMsgLoginReq
 {
-  string      account   = 1; // 账号/微信号/电话号码
-  enums.LoginRetReq loginType = 2; // 登录类型 [ 必填 ]
-  string verification   = 3; // 验证码 [ 非必填 ]
-  string password       = 4; // 密码 [ 必填 微信/电话号码 为成功返回的密码 ]
+  string                  account      = 1; // 账号/微信号/电话号码
+  enumeration.LoginRetReq loginType    = 2; // 登录类型 [ 必填 ]
+  string                  verification = 3; // 验证码 [ 非必填 ]
+  string                  password     = 4; // 密码 [ 必填 微信/电话号码 为成功返回的密码 ]
 }
 
-
-
 // 服务器返回登录信息
+// S2C_MsgID=100@101
 message S2CMsgLoginResp {
-  enums.LoginRetResp          result        = 1;        //登录错误枚举
-  uint32                uId           = 2;        //玩家id
-  string                account       = 3;        //玩家账号
-  string                password      = 4;        //登录密码
-  string                wechat        = 5;        //微信账号
-  string                phone         = 6;        //电话号码
+  enumeration.LoginRetResp result     = 1;        //登录错误枚举
+  uint32                   uId        = 2;        //玩家id
+  string                   account    = 3;        //玩家账号
+  string                   password   = 4;        //登录密码
+  string                   wechat     = 5;        //微信账号
+  string                   phone      = 6;        //电话号码
 }
 
 // 服务器返回客户端IP
+// S2C_MsgID=100@104
 message S2CGetCliIPResp {
   string cliIp = 1; // 玩家IP
 }
 
 // 服务器返回默认服装
+// S2C_MsgID=100@108
 message S2CDefaultClothing {
   repeated uint32 Men    = 1; // 默认男服装list
   repeated uint32 Female = 2; // 默认女装list
+}
+
+// 服务器返回清除服装红点
+// S2C_MsgID=100@116
+message S2CRemoveDressedRedDotResp {
+  bool result = 1; // 清除状态 true 清除成功 false 清除失败
 }

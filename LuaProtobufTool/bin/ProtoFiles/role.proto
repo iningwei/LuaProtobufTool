@@ -1,43 +1,47 @@
 ﻿syntax = "proto3";
 option go_package = "./;common";
 import "common.proto";
-import "enum.proto";
+import "enumeration.proto";
 package role;
 
-
-
 // 创建角色
+// C2S_MsgID=103@1
 message C2SMsgCreateRoleReq
 {
-  uint32  birth = 1;    // 出生时间
-  string  city  = 2;    // 城市
-  uint32  sex   = 3;    // 性别
+  uint32  birth    = 1;    // 出生时间
+  string  city     = 2;    // 城市
+  uint32  sex      = 3;    // 性别
   string  nickName = 4; // 昵称
   string  dressed  = 5; // 穿戴信息
   string  avatar   = 6; // 头像
 }
 
 // 创建角色返回
+// S2C_MsgID=103@101
 message S2CMsgCreateRoleResp {
-  enums.PbRoleRetResp   result  = 1; // 结果
+  enumeration.PbRoleRetResp   result  = 1; // 结果
 }
 
 // 请求其他用户数据
+// C2S_MsgID=103@2
 message C2SOtherUserBaseReq {
   uint32 uid = 1; // 用户ID
 }
 
 // 返回用户数据
+// S2C_MsgID=100@103
 message S2CUserBaseResp {
   commons.PbUserBase info = 1; // 用户基本数据
 }
 
 // 返回其他用户数据
+// S2C_MsgID=100@102
 message S2COtherUserBaseResp {
     commons.PbUserBase other = 1; // 其他用户基本数据
 }
 
 // 修改角色基本信息
+// C2S_MsgID=103@3
 message C2SMsgChangeRoleBaseReq {
   uint32  birth     = 1; // 出生时间
   string  city      = 2; // 城市
@@ -52,107 +56,87 @@ message C2SMsgChangeRoleBaseReq {
 }
 
 // 修改角色基本信息返回
+// S2C_MsgID=103@103
 message S2CMsgChangeRoleBaseResp {
-  enums.PbRoleRetResp   result  = 1; // 结果
+  enumeration.PbRoleRetResp   result  = 1; // 结果
 }
 
 // 角色装扮请求信息
+// C2S_MsgID=100@6
 message C2SUserDressUpRep {
   repeated uint32 oldDressed = 1; // 之前的装扮信息 [ 备注 可以不发 ]
   repeated uint32 newDressed = 2; // 最新的装扮信息 [ 备注 必填 ]
 }
 
 // 角色装扮返回信息
+// S2C_MsgID=100@106
 message S2CUserDressUpResp {
   repeated uint32 dressed = 1; // 最新装扮
            bool   isOk    = 2; // 是否装扮成功 [ 备注 false 没有装扮成功 且 dressed 为空 true 装扮成功 ]
 }
 
-// 装扮信息
-message PbAvatarInfo {
-  uint32 itemID          = 1; // 物品ID
-  uint32 childId         = 2; // 子ID
-  uint32 number          = 3; // 物品数量
-  uint32 durable         = 4; // 剩余耐久度
-  uint32 typeOfExistence = 5; // 装扮存在类型 0 没有类型 1 赛季 >1 秒
-  uint32 startTime       = 6; // 开始时间 [ 赛季：开始时间  秒：获取时间 ]
-  uint32 endTime         = 7; // 结束时间 [ 赛季：结束时间  秒：到期时间 ]
-  uint32 star            = 8; // 星级
-  uint32 level           = 9; // 级别
-  uint32 up              = 10;// 上限
-  uint32 down            = 11;// 下限
-  bool   isDressUp       = 12;// 是否已经装扮
-  bool   isNew           = 13;// 是否是新获得
-}
-
 // 装扮List信息
+// S2C_MsgID=100@107
 message S2CAvatarInfoList {
-  repeated PbAvatarInfo avaterList = 1; // 装扮信息list
+  repeated commons.PbDress avaterList = 1; // 装扮信息list
 }
-
-// 装扮List信息
-message C2SAvatarTsAdd {
-  uint32 itemID  = 1; // 物品ID
-}
-
-// 装扮List信息
-message S2CAvatarTsAdd {
-  uint32 itemID  = 1; // 物品ID
-}
-
-
 
 // 背包道具信息
+// S2C_MsgID=100@113
 message S2CItemsInfoList {
-  repeated commons.PbUserItem    items    = 1; // 道具背包
+  repeated commons.PbItem    items        = 1; // 道具背包
   repeated uint32                newItems = 2; // 新的道具[uid]
 }
 
-
-
 // 装备修复
+// C2S_MsgID=105@3
 message  C2SAvatarRepairReq {
-           uint32   ChildId               = 1; // 装备唯一ID
-  repeated uint32   DressConsumeChildIds  = 2; // NFT装备消耗
-  bool              NftRepair             = 3; // 是否是NFT装备修复
-  enums.ItemConsumeRetReq ItemConsumeType = 4; // 普通修复消耗[非必填,nft装备不填]
+           uint32   ChildId                     = 1; // 装备唯一ID
+  repeated uint32   DressConsumeChildIds        = 2; // NFT装备消耗
+  bool              NftRepair                   = 3; // 是否是NFT装备修复
+  enumeration.ItemConsumeRetReq ItemConsumeType = 4; // 普通修复消耗[非必填,nft装备不填]
 }
 
-
 // 装备修复
+// S2C_MsgID=105@103
 message S2CAvatarRepairResp {
-    enums.AvatarRetResp result  = 1;  // 返回枚举值
-    uint32              ChildId = 2; // 唯一装备ID
-    uint32              Durable = 3; // 装备耐久值
+  enumeration.AvatarRetResp result  = 1;  // 返回枚举值
+    uint32              ChildId     = 2; // 唯一装备ID
+    uint32              Durable     = 3; // 装备耐久值
 }
 
 // 装备升级
+// C2S_MsgID=105@1
 message  C2SAvatarLevelUpReq {
   uint32            ChildId         = 1; // 装备唯一ID
 }
 
 // 装备升级
+// S2C_MsgID=105@101
 message  S2CAvatarLevelUpResp {
-  enums.AvatarRetResp Result  = 1; // 返回枚举值
-  uint32        ChildId = 2; // 装备唯一ID
-  uint32        Level   = 3; // 装备等级
-  uint32        Down    = 4; // 基础系数下限
+  enumeration.AvatarRetResp Result  = 1; // 返回枚举值
+  uint32        ChildId             = 2; // 装备唯一ID
+  uint32        Level               = 3; // 装备等级
+  uint32        Down                = 4; // 基础系数下限
 }
 
 // 装备升星
+// C2S_MsgID=105@2
 message  C2SAvatarStarUpReq {
   uint32 ChildId         = 1; // 装备唯一ID
 }
 
 // 装备升级
+// S2C_MsgID=105@102
 message  S2CAvatarStarUpResp {
-  enums.AvatarRetResp   result  = 1; // 返回枚举值
-  uint32          ChildId = 2; // 装备唯一ID
-  uint32          Star    = 3; // 装备星级
-  uint32          Up      = 4; // 基础系数上限
+  enumeration.AvatarRetResp   result  = 1; // 返回枚举值
+  uint32          ChildId             = 2; // 装备唯一ID
+  uint32          Star                = 3; // 装备星级
+  uint32          Up                  = 4; // 基础系数上限
 }
 
 // 检测Avatar是否超过有效期
+// C2S_MsgID=100@15
 message C2SCkAvaterTimeOutByChildId {
   repeated uint32 childId = 1; // 需要检测的avatar childId
 }
@@ -164,6 +148,7 @@ message CkAvaterTimeOutByChildIdResp{
 }
 
 // 返回检测Avatar是否超过有效期
+// S2C_MsgID=100@115
 message S2CCkAvaterTimeOutByChildIdResp {
     repeated CkAvaterTimeOutByChildIdResp resp = 1; // 返回检测结果
 }

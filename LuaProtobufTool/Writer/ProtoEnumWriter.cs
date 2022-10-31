@@ -10,6 +10,8 @@ namespace LuaProtobufTool.Writer
 {
     internal class ProtoEnumWriter
     {
+        public static Dictionary<string, bool> enumDic = new Dictionary<string, bool>();
+
         public static void Write(List<ProtoEntity> protoEntities, string outputPath)
         {
             int lineCount = 0;
@@ -39,9 +41,9 @@ namespace LuaProtobufTool.Writer
                     for (int j = 0; j < entity.allLines.Count; j++)
                     {
                         var line = entity.allLines[j];
-                        if (line.StartsWith("enum") && line.StartsWith("enums") == false)
+                        if (line.StartsWith("enum") && line.StartsWith("enumeration") == false)
                         {
-                            Console.WriteLine("write enum:::"+line);
+                            Console.WriteLine("write enum:::" + line);
                             //去除enum符号
                             line = line.Remove(0, 4).Trim();
                             if (line.Contains("PbRoleRetResp"))
@@ -63,7 +65,16 @@ namespace LuaProtobufTool.Writer
                                     enumNameEndIndex = line.Length;
                                 }
                             }
-
+                            string enumName = line.Substring(0, enumNameEndIndex).Trim();
+                            if (enumDic.ContainsKey(enumName))
+                            {
+                                Console.WriteLine("duplicated enum:" + enumName);
+                                throw new Exception("duplicated enum:" + enumName);
+                            }
+                            else
+                            {
+                                enumDic.Add(enumName, true);
+                            }
                             line = line.Insert(enumNameEndIndex, "=");
 
                         }

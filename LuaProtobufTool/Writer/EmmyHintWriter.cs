@@ -86,10 +86,14 @@ namespace LuaProtobufTool.Writer
                                 {
                                     fieldType = "boolean";
                                 }
-
                                 else
                                 {
-                                    fieldType = "ProtoEnum." + fieldType;
+                                    if (ProtoEnumWriter.enumDic.ContainsKey(fieldType))
+                                    {
+                                        fieldType = "ProtoEnum." + fieldType;
+                                    }
+
+
                                 }
 
                                 string fieldAnotationStr = "---@field public " + fieldName + " " + fieldType;

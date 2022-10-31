@@ -51,6 +51,7 @@
     <Compile Include="Writer\BasicProtoWriter.cs" />
     <Compile Include="Writer\EmmyHintWriter.cs" />
     <Compile Include="Writer\ProtoEnumWriter.cs" />
+    <Compile Include="Writer\ProtoMsgIDWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

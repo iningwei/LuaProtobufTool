@@ -24,6 +24,7 @@ local PbRolePTPPushResp = {}
 ---@field public down number
 ---@field public isDressUp boolean
 ---@field public isNew boolean
+---@field public isLock boolean
 local PbDress = {}
 
 ---@class PbItem
@@ -47,7 +48,7 @@ local PbItem = {}
 ---@field public nftCount number
 ---@field public ranking number
 ---@field public quarterScore number
----@field public PbUseDresseds ProtoEnum.repeated
+---@field public PbUseDresseds repeated
 ---@field public microBlog string
 ---@field public QQ string
 ---@field public mailBox string
@@ -55,7 +56,7 @@ local PbItem = {}
 ---@field public weChat string
 ---@field public IdCard string
 ---@field public isVerify number
----@field public PbUserItem ProtoEnum.repeated
+---@field public PbItem repeated
 ---@field public LocalTime number
 local PbUserBase = {}
 
@@ -64,15 +65,6 @@ local PbUserBase = {}
 ---@field public itemUid number
 ---@field public EndTime number
 local PbUseDresseds = {}
-
----@class PbUserItem
----@field public itemUid number
----@field public itemId number
----@field public Number number
----@field public Times number
----@field public Durable number
----@field public Lock number
-local PbUserItem = {}
 
 ---@class C2SVerificationCodeReq
 ---@field public phone string
@@ -103,9 +95,13 @@ local S2CMsgLoginResp = {}
 local S2CGetCliIPResp = {}
 
 ---@class S2CDefaultClothing
----@field public uint32 ProtoEnum.repeated
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
+---@field public uint32 repeated
 local S2CDefaultClothing = {}
+
+---@class S2CRemoveDressedRedDotResp
+---@field public result boolean
+local S2CRemoveDressedRedDotResp = {}
 
 ---@class PbVec3
 ---@field public X number
@@ -114,13 +110,13 @@ local S2CDefaultClothing = {}
 local PbVec3 = {}
 
 ---@class PbPosition
----@field public Pos ProtoEnum.PbVec3
----@field public Dir ProtoEnum.PbVec3
+---@field public Pos PbVec3
+---@field public Dir PbVec3
 local PbPosition = {}
 
 ---@class PbPlayerPos
 ---@field public UID number
----@field public P ProtoEnum.PbPosition
+---@field public P PbPosition
 local PbPlayerPos = {}
 
 ---@class PbDresseds
@@ -133,7 +129,7 @@ local PbDresseds = {}
 ---@field public UID number
 ---@field public Name string
 ---@field public Sex number
----@field public PbDresseds ProtoEnum.repeated
+---@field public PbDresseds repeated
 ---@field public LocalTime number
 ---@field public Action number
 local PbPlayerMin = {}
@@ -145,19 +141,19 @@ local PbPlayerInfo = {}
 
 ---@class C2SPlayerMove
 ---@field public UID number
----@field public CurPos ProtoEnum.PbPosition
+---@field public CurPos PbPosition
 local C2SPlayerMove = {}
 
 ---@class S2CSyncPos
----@field public PbPlayerPos ProtoEnum.repeated
+---@field public PbPlayerPos repeated
 local S2CSyncPos = {}
 
 ---@class S2CPlayerRemove
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
 local S2CPlayerRemove = {}
 
 ---@class S2CPlayerMin
----@field public PbPlayerMin ProtoEnum.repeated
+---@field public PbPlayerMin repeated
 local S2CPlayerMin = {}
 
 ---@class C2SPlayerInfo
@@ -165,7 +161,7 @@ local S2CPlayerMin = {}
 local C2SPlayerInfo = {}
 
 ---@class S2CPlayerInfo
----@field public Data ProtoEnum.PbPlayerInfo
+---@field public Data PbPlayerInfo
 local S2CPlayerInfo = {}
 
 ---@class C2SChangeAction
@@ -179,16 +175,16 @@ local C2SChangeAction = {}
 local S2CChangeAction = {}
 
 ---@class S2CMsgUserItemsUpdate
----@field public addCurs ProtoEnum.PbItem
----@field public upCurs ProtoEnum.PbItem
----@field public uint32 ProtoEnum.repeated
----@field public addItems ProtoEnum.PbItem
----@field public upItems ProtoEnum.PbItem
----@field public uint32 ProtoEnum.repeated
----@field public addDress ProtoEnum.PbDress
----@field public upDress ProtoEnum.PbDress
----@field public uint32 ProtoEnum.repeated
----@field public uint32 ProtoEnum.repeated
+---@field public addCurs PbItem
+---@field public upCurs PbItem
+---@field public uint32 repeated
+---@field public addItems PbItem
+---@field public upItems PbItem
+---@field public uint32 repeated
+---@field public addDress PbDress
+---@field public upDress PbDress
+---@field public uint32 repeated
+---@field public uint32 repeated
 local S2CMsgUserItemsUpdate = {}
 
 ---@class C2SMergeItemReq
@@ -200,7 +196,7 @@ local C2SMergeItemReq = {}
 local S2CMergeItemResp = {}
 
 ---@class C2SMsgBagSellItemReq
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
 local C2SMsgBagSellItemReq = {}
 
 ---@class S2CMsgBagSellItemResp
@@ -208,7 +204,7 @@ local C2SMsgBagSellItemReq = {}
 local S2CMsgBagSellItemResp = {}
 
 ---@class C2SMsgBagUseItemReq
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
 ---@field public index number
 local C2SMsgBagUseItemReq = {}
 
@@ -217,7 +213,7 @@ local C2SMsgBagUseItemReq = {}
 local S2CMsgBagUseItemResp = {}
 
 ---@class C2SMsgBagSplitItemReq
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
 local C2SMsgBagSplitItemReq = {}
 
 ---@class S2CMsgBagSplitItemResp
@@ -225,7 +221,7 @@ local C2SMsgBagSplitItemReq = {}
 local S2CMsgBagSplitItemResp = {}
 
 ---@class C2SMsgBagUnlockItemReq
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
 local C2SMsgBagUnlockItemReq = {}
 
 ---@class S2CMsgBagUnlockItemResp
@@ -257,11 +253,11 @@ local S2CMsgCreateRoleResp = {}
 local C2SOtherUserBaseReq = {}
 
 ---@class S2CUserBaseResp
----@field public info ProtoEnum.PbUserBase
+---@field public info PbUserBase
 local S2CUserBaseResp = {}
 
 ---@class S2COtherUserBaseResp
----@field public other ProtoEnum.PbUserBase
+---@field public other PbUserBase
 local S2COtherUserBaseResp = {}
 
 ---@class C2SMsgChangeRoleBaseReq
@@ -282,51 +278,27 @@ local C2SMsgChangeRoleBaseReq = {}
 local S2CMsgChangeRoleBaseResp = {}
 
 ---@class C2SUserDressUpRep
----@field public uint32 ProtoEnum.repeated
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
+---@field public uint32 repeated
 local C2SUserDressUpRep = {}
 
 ---@class S2CUserDressUpResp
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
 ---@field public isOk boolean
 local S2CUserDressUpResp = {}
 
----@class PbAvatarInfo
----@field public itemID number
----@field public childId number
----@field public number number
----@field public durable number
----@field public typeOfExistence number
----@field public startTime number
----@field public endTime number
----@field public star number
----@field public level number
----@field public up number
----@field public down number
----@field public isDressUp boolean
----@field public isNew boolean
-local PbAvatarInfo = {}
-
 ---@class S2CAvatarInfoList
----@field public PbAvatarInfo ProtoEnum.repeated
+---@field public avaterList PbDress
 local S2CAvatarInfoList = {}
 
----@class C2SAvatarTsAdd
----@field public itemID number
-local C2SAvatarTsAdd = {}
-
----@class S2CAvatarTsAdd
----@field public itemID number
-local S2CAvatarTsAdd = {}
-
 ---@class S2CItemsInfoList
----@field public items ProtoEnum.PbUserItem
----@field public uint32 ProtoEnum.repeated
+---@field public items PbItem
+---@field public uint32 repeated
 local S2CItemsInfoList = {}
 
 ---@class C2SAvatarRepairReq
 ---@field public ChildId number
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
 ---@field public NftRepair boolean
 ---@field public ItemConsumeType ProtoEnum.ItemConsumeRetReq
 local C2SAvatarRepairReq = {}
@@ -360,7 +332,7 @@ local C2SAvatarStarUpReq = {}
 local S2CAvatarStarUpResp = {}
 
 ---@class C2SCkAvaterTimeOutByChildId
----@field public uint32 ProtoEnum.repeated
+---@field public uint32 repeated
 local C2SCkAvaterTimeOutByChildId = {}
 
 ---@class CkAvaterTimeOutByChildIdResp
@@ -369,6 +341,6 @@ local C2SCkAvaterTimeOutByChildId = {}
 local CkAvaterTimeOutByChildIdResp = {}
 
 ---@class S2CCkAvaterTimeOutByChildIdResp
----@field public CkAvaterTimeOutByChildIdResp ProtoEnum.repeated
+---@field public CkAvaterTimeOutByChildIdResp repeated
 local S2CCkAvaterTimeOutByChildIdResp = {}
 
