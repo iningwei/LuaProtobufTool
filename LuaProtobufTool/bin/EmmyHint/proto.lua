@@ -48,7 +48,7 @@ local PbItem = {}
 ---@field public nftCount number
 ---@field public ranking number
 ---@field public quarterScore number
----@field public PbUseDresseds repeated
+---@field public dressed PbUseDresseds[]
 ---@field public microBlog string
 ---@field public QQ string
 ---@field public mailBox string
@@ -56,7 +56,7 @@ local PbItem = {}
 ---@field public weChat string
 ---@field public IdCard string
 ---@field public isVerify number
----@field public PbItem repeated
+---@field public currency PbItem[]
 ---@field public LocalTime number
 local PbUserBase = {}
 
@@ -95,8 +95,8 @@ local S2CMsgLoginResp = {}
 local S2CGetCliIPResp = {}
 
 ---@class S2CDefaultClothing
----@field public uint32 repeated
----@field public uint32 repeated
+---@field public Men number[]
+---@field public Female number[]
 local S2CDefaultClothing = {}
 
 ---@class S2CRemoveDressedRedDotResp
@@ -129,7 +129,7 @@ local PbDresseds = {}
 ---@field public UID number
 ---@field public Name string
 ---@field public Sex number
----@field public PbDresseds repeated
+---@field public Dressed PbDresseds[]
 ---@field public LocalTime number
 ---@field public Action number
 local PbPlayerMin = {}
@@ -145,15 +145,15 @@ local PbPlayerInfo = {}
 local C2SPlayerMove = {}
 
 ---@class S2CSyncPos
----@field public PbPlayerPos repeated
+---@field public Lst PbPlayerPos[]
 local S2CSyncPos = {}
 
 ---@class S2CPlayerRemove
----@field public uint32 repeated
+---@field public Lst number[]
 local S2CPlayerRemove = {}
 
 ---@class S2CPlayerMin
----@field public PbPlayerMin repeated
+---@field public Lst PbPlayerMin[]
 local S2CPlayerMin = {}
 
 ---@class C2SPlayerInfo
@@ -175,16 +175,16 @@ local C2SChangeAction = {}
 local S2CChangeAction = {}
 
 ---@class S2CMsgUserItemsUpdate
----@field public addCurs PbItem
----@field public upCurs PbItem
----@field public uint32 repeated
----@field public addItems PbItem
----@field public upItems PbItem
----@field public uint32 repeated
----@field public addDress PbDress
----@field public upDress PbDress
----@field public uint32 repeated
----@field public uint32 repeated
+---@field public addCurs PbItem[]
+---@field public upCurs PbItem[]
+---@field public delCurs number[]
+---@field public addItems PbItem[]
+---@field public upItems PbItem[]
+---@field public delItems number[]
+---@field public addDress PbDress[]
+---@field public upDress PbDress[]
+---@field public delDress number[]
+---@field public addLst number[]
 local S2CMsgUserItemsUpdate = {}
 
 ---@class C2SMergeItemReq
@@ -196,7 +196,7 @@ local C2SMergeItemReq = {}
 local S2CMergeItemResp = {}
 
 ---@class C2SMsgBagSellItemReq
----@field public uint32 repeated
+---@field public list number[]
 local C2SMsgBagSellItemReq = {}
 
 ---@class S2CMsgBagSellItemResp
@@ -204,7 +204,7 @@ local C2SMsgBagSellItemReq = {}
 local S2CMsgBagSellItemResp = {}
 
 ---@class C2SMsgBagUseItemReq
----@field public uint32 repeated
+---@field public list number[]
 ---@field public index number
 local C2SMsgBagUseItemReq = {}
 
@@ -213,7 +213,7 @@ local C2SMsgBagUseItemReq = {}
 local S2CMsgBagUseItemResp = {}
 
 ---@class C2SMsgBagSplitItemReq
----@field public uint32 repeated
+---@field public list number[]
 local C2SMsgBagSplitItemReq = {}
 
 ---@class S2CMsgBagSplitItemResp
@@ -221,7 +221,7 @@ local C2SMsgBagSplitItemReq = {}
 local S2CMsgBagSplitItemResp = {}
 
 ---@class C2SMsgBagUnlockItemReq
----@field public uint32 repeated
+---@field public list number[]
 local C2SMsgBagUnlockItemReq = {}
 
 ---@class S2CMsgBagUnlockItemResp
@@ -278,27 +278,27 @@ local C2SMsgChangeRoleBaseReq = {}
 local S2CMsgChangeRoleBaseResp = {}
 
 ---@class C2SUserDressUpRep
----@field public uint32 repeated
----@field public uint32 repeated
+---@field public oldDressed number[]
+---@field public newDressed number[]
 local C2SUserDressUpRep = {}
 
 ---@class S2CUserDressUpResp
----@field public uint32 repeated
+---@field public dressed number[]
 ---@field public isOk boolean
 local S2CUserDressUpResp = {}
 
 ---@class S2CAvatarInfoList
----@field public avaterList PbDress
+---@field public avaterList PbDress[]
 local S2CAvatarInfoList = {}
 
 ---@class S2CItemsInfoList
----@field public items PbItem
----@field public uint32 repeated
+---@field public items PbItem[]
+---@field public newItems number[]
 local S2CItemsInfoList = {}
 
 ---@class C2SAvatarRepairReq
 ---@field public ChildId number
----@field public uint32 repeated
+---@field public DressConsumeChildIds number[]
 ---@field public NftRepair boolean
 ---@field public ItemConsumeType ProtoEnum.ItemConsumeRetReq
 local C2SAvatarRepairReq = {}
@@ -332,7 +332,7 @@ local C2SAvatarStarUpReq = {}
 local S2CAvatarStarUpResp = {}
 
 ---@class C2SCkAvaterTimeOutByChildId
----@field public uint32 repeated
+---@field public childId number[]
 local C2SCkAvaterTimeOutByChildId = {}
 
 ---@class CkAvaterTimeOutByChildIdResp
@@ -341,6 +341,6 @@ local C2SCkAvaterTimeOutByChildId = {}
 local CkAvaterTimeOutByChildIdResp = {}
 
 ---@class S2CCkAvaterTimeOutByChildIdResp
----@field public CkAvaterTimeOutByChildIdResp repeated
+---@field public resp CkAvaterTimeOutByChildIdResp[]
 local S2CCkAvaterTimeOutByChildIdResp = {}
 

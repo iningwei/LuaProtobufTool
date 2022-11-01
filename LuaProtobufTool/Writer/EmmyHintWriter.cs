@@ -47,10 +47,30 @@ namespace LuaProtobufTool.Writer
                             }
                             else
                             {
-                                //filed注释 
-                                string fieldType = seps[0].Trim();
+                                //field注释
+                                int fieldTypeIndexInSeps = 0;
+                                string fieldType = "";
+                                if (line.Contains("repeated"))
+                                {
+                                    
+                                    for (int k = 1; k < seps.Length; k++)
+                                    {
+                                        if (seps[k].Trim() != "")
+                                        {
+                                            fieldType = seps[k].Trim();
+                                            fieldTypeIndexInSeps = k;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    fieldType = seps[0].Trim();
+                                    fieldTypeIndexInSeps = 0;
+                                }
+                           
                                 string fieldName = "";
-                                for (int k = 1; k < seps.Length; k++)
+                                for (int k = fieldTypeIndexInSeps+1; k < seps.Length; k++)
                                 {
                                     if (seps[k].Trim() != "")
                                     {
@@ -95,7 +115,10 @@ namespace LuaProtobufTool.Writer
 
 
                                 }
-
+                                if (line.Contains("repeated"))
+                                {
+                                    fieldType = fieldType + "[]";
+                                }
                                 string fieldAnotationStr = "---@field public " + fieldName + " " + fieldType;
                                 allLines.Add(fieldAnotationStr);
                             }

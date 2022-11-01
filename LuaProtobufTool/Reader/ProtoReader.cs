@@ -136,12 +136,21 @@ namespace LuaProtobufTool.Reader
                         entity.entityName = entityName;
                         for (int p = (anotationIndex != -1 ? anotationIndex : entityStartIndex); p <= entityEndIndex; p++)
                         {
-                            var content = lines[p];
+                            var content = lines[p].Trim();
                             //去除content中的嵌套类结构
+                            //需要考虑诸如 repeated 嵌套类名.消息体 这种结构
                             int index = content.IndexOf(".");
                             if (index != -1)
                             {
-                                content = content.Substring(index + 1);
+                                var firstSepIndex = content.IndexOf(' ');
+                                if (firstSepIndex != -1&& firstSepIndex<index)
+                                {
+                                    content = content.Remove(firstSepIndex+1, index - firstSepIndex);
+                                }
+                                else
+                                {
+                                    content = content.Substring(index + 1);
+                                }
                             }
                             entity.AddLine(content);
                         }
