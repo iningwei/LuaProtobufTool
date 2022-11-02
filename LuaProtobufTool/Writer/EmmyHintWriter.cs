@@ -50,9 +50,14 @@ namespace LuaProtobufTool.Writer
                                 //field注释
                                 int fieldTypeIndexInSeps = 0;
                                 string fieldType = "";
+                                string annotation = "";
+                                if (line.Contains(@"//"))
+                                {
+                                  annotation="  --"+line.Substring(line.IndexOf(@"//")+2);                                     
+                                }
                                 if (line.Contains("repeated"))
                                 {
-                                    
+
                                     for (int k = 1; k < seps.Length; k++)
                                     {
                                         if (seps[k].Trim() != "")
@@ -68,9 +73,9 @@ namespace LuaProtobufTool.Writer
                                     fieldType = seps[0].Trim();
                                     fieldTypeIndexInSeps = 0;
                                 }
-                           
+
                                 string fieldName = "";
-                                for (int k = fieldTypeIndexInSeps+1; k < seps.Length; k++)
+                                for (int k = fieldTypeIndexInSeps + 1; k < seps.Length; k++)
                                 {
                                     if (seps[k].Trim() != "")
                                     {
@@ -119,7 +124,7 @@ namespace LuaProtobufTool.Writer
                                 {
                                     fieldType = fieldType + "[]";
                                 }
-                                string fieldAnotationStr = "---@field public " + fieldName + " " + fieldType;
+                                string fieldAnotationStr = "---@field public " + fieldName + " " + fieldType+ annotation;
                                 allLines.Add(fieldAnotationStr);
                             }
 
