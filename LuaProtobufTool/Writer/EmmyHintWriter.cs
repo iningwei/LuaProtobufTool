@@ -53,7 +53,7 @@ namespace LuaProtobufTool.Writer
                                 string annotation = "";
                                 if (line.Contains(@"//"))
                                 {
-                                  annotation="  --"+line.Substring(line.IndexOf(@"//")+2);                                     
+                                  annotation=" @"+line.Substring(line.IndexOf(@"//")+2);                                     
                                 }
                                 if (line.Contains("repeated"))
                                 {
