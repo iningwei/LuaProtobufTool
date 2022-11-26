@@ -9,6 +9,12 @@ Proto.MsgIdByNameCS = {
 -- 用户登录
 ["C2SMsgLoginReq"]="100@1",
 
+["C2SMailRead"]="110@2",
+
+["C2SMailGet"]="110@3",
+
+["C2SMailDel"]="110@4",
+
 ["C2SPlayerMove"]="90@2",
 
 -- 客户端发给服务器，获取玩家详细信息
@@ -16,6 +22,9 @@ Proto.MsgIdByNameCS = {
 
 -- 客户端发给服务器，获取玩家详细信息
 ["C2SChangeAction"]="90@3",
+
+-- 客户端发给服务器，切换地图
+["C2SChangeMap"]="90@4",
 
 -- 道具和合成
 ["C2SMergeItemReq"]="100@14",
@@ -78,7 +87,23 @@ Proto.MsgIdByNameSC = {
 -- 服务器返回清除服装红点
 ["S2CRemoveDressedRedDotResp"]="100@116",
 
---玩家广播数据
+["S2CMailInfo"]="110@101",
+
+["S2CMailRead"]="110@103",
+
+["S2CMailGet"]="110@104",
+
+["S2CMailDel"]="110@105",
+
+["S2CMailGetAll"]="110@107",
+
+["S2CMailDelAll"]="110@108",
+
+["S2CGetNotice"]="100@109",
+
+["S2CGetPaoMaDengLst"]="100@110",
+
+-- 玩家广播数据
 ["S2CSyncPos"]="90@10000",
 
 ["S2CPlayerRemove"]="90@10003",
@@ -91,6 +116,9 @@ Proto.MsgIdByNameSC = {
 
 -- 服务器发给客户端的玩家详细信息（查看玩家详情所需信息）
 ["S2CChangeAction"]="90@10004",
+
+-- 服务器发给客户端，回应切换地图
+["S2CChangeMap"]="90@10005",
 
 -- 道具信息更新推送
 ["S2CMsgUserItemsUpdate"]="104@201",

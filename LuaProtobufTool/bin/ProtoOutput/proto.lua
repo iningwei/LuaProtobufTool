@@ -4,18 +4,29 @@ Schema=[[
 syntax="proto3"
 // 空数据
 message PbEmptyMsg {
+}
 
+// 位置信息
+message PbVec3 {
+float X = 1;
+float Y = 2;
+float Z = 3;
+}
+
+message PbPosition {
+PbVec3 Pos = 1;  // 位置
+PbVec3 Dir = 2;  // 朝向
 }
 
 // 服务器返回用户关闭
 message PbClinetCloseMsg {
-uint32 result = 1; // 返回信息
-uint32 uid    = 2; // 玩家ID
+uint32 result = 1;  // 返回信息
+uint32 uid    = 2;  // 玩家ID
 }
 
 // 点对点推送 枚举
 enum PTPResp {
-PTP_AVATAR_TIME_OUT = 0; // 用户装扮到期
+PTP_AVATAR_TIME_OUT = 0;  // 用户装扮到期
 }
 
 // 点对点推送
@@ -25,62 +36,75 @@ PTPResp Types = 1;
 
 // 装扮信息
 message PbDress {
-uint32 itemId          = 1; // 物品ID
-uint32 itemUid         = 2; // 子ID
-uint32 number          = 3; // 物品数量
-uint32 durable         = 4; // 剩余耐久度
-uint32 typeOfExistence = 5; // 装扮存在类型 0 没有类型 1 赛季 >1 秒
-uint32 startTime       = 6; // 开始时间 [ 赛季：开始时间  秒：获取时间 ]
-uint32 endTime         = 7; // 结束时间 [ 赛季：结束时间  秒：到期时间 ]
-uint32 star            = 8; // 星级
-uint32 level           = 9; // 级别
-uint32 up              = 10;// 上限
-uint32 down            = 11;// 下限
-bool   isDressUp       = 12;// 是否已经装扮
-bool   isNew           = 13;// 是否是新获得
-bool   isLock          = 14;// 是否锁定
+uint32 itemId          = 1;   // 物品ID
+uint32 itemUid         = 2;   // 子ID
+uint32 number          = 3;   // 物品数量
+PbDurable durable      = 4;   // 剩余耐久度
+uint32 typeOfExistence = 5;   // 装扮存在类型 0 没有类型 1 赛季 >1 秒
+uint32 startTime       = 6;   // 开始时间 [ 赛季：开始时间  秒：获取时间 ]
+uint32 endTime         = 7;   // 结束时间 [ 赛季：结束时间  秒：到期时间 ]
+uint32 star            = 8;   // 星级
+uint32 level           = 9;   // 级别
+uint32 up              = 10;  // 上限
+uint32 down            = 11;  // 下限
+bool isDressUp         = 12;  // 是否已经装扮
+bool isNew             = 13;  // 是否是新获得
+bool isLock            = 14;  // 是否锁定
+uint32 LockTime        = 15;  // 锁定时间
+uint32 sex             = 16;  // 服装性别
+bool isDefault         = 17;  // 是否是默认
+}
+
+// 耐久度信息
+message PbDurable {
+bool isDurable = 1;  // 是否有耐久
+uint32 durable = 2;  // 总耐久
+uint32 used    = 3;  // 使用的耐久度
 }
 
 // 通用道具结构
 message PbItem {
-uint32 itemUid  = 1; // 道具唯一ID
-uint32 itemId   = 2; // 道具配置ID
-uint32 Number   = 3; // 道具数量
-uint32 Times    = 4; // 道具有效期[0:没有时效 1:赛季道具 >1:时效时间]
-uint32 Durable  = 5; // 道具耐久度[0:没有耐久度 >0:当前耐久度]
-uint32 Lock     = 6; // 道具锁定期[0:没有锁定 1：锁定时间]
+uint32 itemUid = 1;  // 道具唯一ID
+uint32 itemId  = 2;  // 道具配置ID
+uint32 Number  = 3;  // 道具数量
+uint32 Times   = 4;  // 道具有效期[0:没有时效 1:赛季道具 >1:时效时间]
+uint32 Durable = 5;  // 道具耐久度[0:没有耐久度 >0:当前耐久度]
+uint32 Lock    = 6;  // 道具锁定期[0:没有锁定 1：锁定时间]
 }
 
 // 返回用户数据
 message PbUserBase {
-uint32        uid          = 1; // 用户ID
-uint32        birth        = 2; // 出生时间
-string        city         = 3; // 城市
-uint32        sex          = 4; // 性别
-string        nickName     = 5; // 昵称
-uint32        level        = 6; // 级别
-string        avatar       = 7; // 头像
-uint64        power        = 8; // 体力
-uint64        nftCount     = 9; // nft数量
-uint64        ranking      = 10;// 排名
-uint64        quarterScore = 11;// 季度赛分数
-repeated PbUseDresseds dressed      = 12;// 穿戴信息
-string        microBlog    = 13;// 博客账号
-string        QQ           = 14;// QQ账号
-string        mailBox      = 15;// e-mail账号
-string        Phone        = 16;// 手机号
-string        weChat       = 17;// 微信号
-string        IdCard       = 18;// 身份证验证信息
-uint32        isVerify     = 19;// 是否验证 0位 手机号验证 1位 微信号验证 【备注 已经验证为1】
-repeated PbItem    currency     = 20;// 货币背包
-uint32        LocalTime    = 21;// 服务器本地时间
+uint32 uid                  = 1;   // 用户ID
+uint32 birth                = 2;   // 出生时间
+string city                 = 3;   // 城市
+uint32 sex                  = 4;   // 性别
+string nickName             = 5;   // 昵称
+uint32 level                = 6;   // 级别
+string avatar               = 7;   // 头像
+uint64 power                = 8;   // 体力
+uint64 nftCount             = 9;   // nft数量
+uint64 ranking              = 10;  // 排名
+uint64 quarterScore         = 11;  // 季度赛分数
+repeated PbDresseds dressed = 12;  // 穿戴信息
+string microBlog            = 13;  // 博客账号
+string QQ                   = 14;  // QQ账号
+string mailBox              = 15;  // e-mail账号
+string Phone                = 16;  // 手机号
+string weChat               = 17;  // 微信号
+string IdCard               = 18;  // 身份证验证信息
+uint32 isVerify             = 19;  // 是否验证 0位 手机号验证 1位 微信号验证 【备注 已经验证为1】
+repeated PbItem currency    = 20;  // 货币背包
+uint32 LocalTime            = 21;  // 服务器本地时间
+uint32 mapId                = 22;  // 玩家所在地图id
+uint64 roomId               = 23;  // 玩家所在房间
+PbPosition Pos              = 24;  // 玩家所在位置
 }
 
 // 用户已经穿戴的数
-message PbUseDresseds  {
-uint32 ItemId    = 1; // 道具ID
-uint32 itemUid   = 2; // 物品ID
-uint32 EndTime   = 3; // 到期时间
+message PbDresseds {
+uint32 ItemId  = 1;  // 道具ID
+uint32 ItemUid = 2;  // 物品ID
+uint32 EndTime = 3;  // 到期时间
 }
 // 用户登录枚举值
 enum LoginRetReq
@@ -117,6 +141,7 @@ PRR_ERR_NOT_USE_ITEM            = 4; // 物品不能使用
 PRR_ERR_NOT_SPLIT_ITEM          = 5; // 物品不能分解
 PRR_ERR_NOT_UNLOCK_ITEM         = 6; // 物品不能解锁
 PRR_ERR_REQUEST_PARAMETER       = 7; // 请求参数错误
+PRR_ERR_BAG_CAPACITY_NOT_ENOUGH = 8; // 背包容量不足
 }
 
 // 合成枚举值
@@ -146,16 +171,19 @@ RRR_PHONE_ERR           = 10;// 角色手机号错误
 
 enum AvatarRetResp
 {
-RER_ERROR             = 0; // 错误
-RER_SUCCESS           = 1; // 成功
-RER_NO_NEED_REPAIR    = 2; // 装备不需要修复
-RER_MAX_DURABLE       = 3; // 装备耐久度已满
-RER_NO_ENOUGH_STAR    = 4; // 装备星级不够
-RER_NO_ENOUGH_LEVEL   = 5; // 装备等级不够
-RER_NO_Dress          = 6; // 没有装备
-RER_FAILED            = 7; // 养成失败
-RER_NO_ENOUGH_ITEM    = 8; // 养成道具不足
-RER_DEL_ITEM_ERROR    = 9; // 扣除道具失败
+RER_ERROR                   = 0; // 错误
+RER_SUCCESS                 = 1; // 成功
+RER_NO_NEED_REPAIR          = 2; // 装备不需要修复
+RER_MAX_DURABLE             = 3; // 装备耐久度已满
+RER_NO_ENOUGH_STAR          = 4; // 装备星级不够
+RER_NO_ENOUGH_LEVEL         = 5; // 装备等级不够
+RER_NO_Dress                = 6; // 没有装备
+RER_FAILED                  = 7; // 养成失败
+RER_NO_ENOUGH_ITEM          = 8; // 养成道具不足
+RER_DEL_ITEM_ERROR          = 9; // 扣除道具失败
+RER_REQUEST_PARAMETER_ERROR = 10;// 请求参数错误
+RER_MAX_STAR                = 11;// 装备星级已满
+RER_MAX_Level               = 12;// 装备等级已满
 }
 
 enum ItemConsumeRetReq
@@ -164,145 +192,215 @@ Q_PLUME = 0; // 消耗羽毛
 Q_GOLD  = 1; // 消耗金币
 }
 
+enum MailTypeResp
+{
+MAIL_NORMAL = 0; // 用户邮件
+MAIL_OFGM   = 1; // GM邮件
+}
 // 获取手机验证码
 // C2S_MsgID=1@5
 message C2SVerificationCodeReq {
-string phone = 1; // 电话号码
+string phone = 1;  // 电话号码
 }
 
 // 返回获取的验证码
 // S2C_MsgID=1@104
 message S2CVerificationCodeResp {
-bool result = 1; // 是否获取成功
+bool result = 1;  // 是否获取成功
 }
 
 // 用户登录
 // C2S_MsgID=100@1
-message C2SMsgLoginReq
-{
-string                  account      = 1; // 账号/微信号/电话号码
-LoginRetReq loginType    = 2; // 登录类型 [ 必填 ]
-string                  verification = 3; // 验证码 [ 非必填 ]
-string                  password     = 4; // 密码 [ 必填 微信/电话号码 为成功返回的密码 ]
+message C2SMsgLoginReq {
+string account                    = 1;  // 账号/微信号/电话号码
+LoginRetReq loginType = 2;  // 登录类型 [ 必填 ]
+string verification               = 3;  // 验证码 [ 非必填 ]
+string password                   = 4;  // 密码 [ 必填 微信/电话号码 为成功返回的密码 ]
 }
 
 // 服务器返回登录信息
 // S2C_MsgID=100@101
 message S2CMsgLoginResp {
-LoginRetResp result     = 1;        //登录错误枚举
-uint32                   uId        = 2;        //玩家id
-string                   account    = 3;        //玩家账号
-string                   password   = 4;        //登录密码
-string                   wechat     = 5;        //微信账号
-string                   phone      = 6;        //电话号码
+LoginRetResp result = 1;  // 登录错误枚举
+uint32 uId                      = 2;  // 玩家id
+string account                  = 3;  // 玩家账号
+string password                 = 4;  // 登录密码
+string wechat                   = 5;  // 微信账号
+string phone                    = 6;  // 电话号码
+uint64 roomId                   = 7;  // 当前所在房间
 }
 
 // 服务器返回客户端IP
 // S2C_MsgID=100@104
 message S2CGetCliIPResp {
-string cliIp = 1; // 玩家IP
+string cliIp = 1;  // 玩家IP
 }
 
 // 服务器返回默认服装
 // S2C_MsgID=100@108
 message S2CDefaultClothing {
-repeated uint32 Men    = 1; // 默认男服装list
-repeated uint32 Female = 2; // 默认女装list
+repeated uint32 Men    = 1;  // 默认男服装list
+repeated uint32 Female = 2;  // 默认女装list
 }
 
 // 服务器返回清除服装红点
 // S2C_MsgID=100@116
 message S2CRemoveDressedRedDotResp {
-bool result = 1; // 清除状态 true 清除成功 false 清除失败
-}
-//位置信息
-message PbVec3{
-float X=1;
-float Y=2;
-float Z=3;
+bool result = 1;  // 清除状态 true 清除成功 false 清除失败
 }
 
-message PbPosition{
-PbVec3 Pos=1;	//位置
-PbVec3 Dir=2;	//朝向
+message PbMailOne {
+int64 ID                  = 1;  // 邮件ID，同时也是创建时间，纳秒
+uint32 Type               = 2;  // 类型MAIL_TYPE_READED、MAIL_TYPE_SYSTEM
+uint32 EmailID            = 3;  // emailID表的emailID
+uint32 Et                 = 4;  // 到期时间
+uint32 SenderID           = 5;  // 邮件发送者的UserID
+string SenderName         = 6;  // 发送者名字
+repeated uint32 BodyData  = 7;  // 邮件内容数据（配合表emailID）
+repeated string BodyData2 = 8;  // 邮件内容数据（配合表emailID）
+repeated uint32 ItemLst   = 9;  // 邮件附加物品列表[ItemID,ItemCount...]
+}
+message S2CMailInfo {
+uint32 Result            = 1;  // 返回信息，因为邮件到期会被删除，所以必须一次性返回所有邮件。0成功，1失败，
+repeated PbMailOne Lst   = 2;  // 邮件列表，按收到邮件时间的倒序
+repeated PbMailOne GmLst = 3;  // GM邮件列表
 }
 
-//玩家位置信息
-message PbPlayerPos{
-uint32 UID	=	1;	//用户ID
-PbPosition P	=	2;
+message C2SMailRead {
+int64        ID    = 1; // 邮件ID
+MailTypeResp Types = 2; // 邮件类型
+}
+message S2CMailRead {
+uint32 Result = 1;  // 返回信息，0成功，1失败，2邮件已是已读状态，3未找到邮件，4背包容量不足
+int64 ID      = 2;  // 邮件ID
 }
 
-
-// 用户已经穿戴的数
-message PbDresseds  {
-uint32  ItemId  = 1; // 道具ID
-uint32  ChildId = 2;// 物品ID
-uint32  EndTime   = 3; // 到期时间
+message C2SMailGet {
+int64        ID    = 1; // 邮件ID
+MailTypeResp Types = 2; // 邮件类型
+}
+message S2CMailGet {
+uint32 Result = 1;  // 返回信息，0成功，1失败，2邮件物品已领取过，3未找到邮件，4仓库容量不够
+int64 ID      = 2;
 }
 
-
-//玩家简略信息
-message PbPlayerMin{
-uint32              UID	      = 1; // 用户ID
-string              Name      = 2; // 昵称
-uint32              Sex       = 3; // 性别
-repeated PbDresseds Dressed   = 4; // 穿戴信息
-uint32              LocalTime = 5; // 服务器本地时间
-uint32 							Action		= 6;	//用户行为，1站立、空闲，2行走，3跑，4跳
+message C2SMailDel {
+int64 ID = 1;
+}
+message S2CMailDel {
+uint32 Result = 1;  // 返回信息，0成功，1失败，2邮件是未读状态或者有物品未领取，不能删除，3未找到邮件
+int64 ID      = 2;
 }
 
-//玩家详细信息
-message PbPlayerInfo{
-uint32 UID	=	1;	//用户ID
-string Name	=	2;	//昵称
+message S2CMailGetAll {
+uint32 Result = 1;  // 返回信息，0成功，1失败，2仓库容量不够
 }
 
-message C2SPlayerMove{
-uint32 UID				=	1;	//用户ID
-PbPosition CurPos	= 2;	//当前位置
+message S2CMailDelAll {
+uint32 Result = 1;  // 返回信息，0成功，1失败
 }
 
-//玩家广播数据
-// S2C_MsgID=90@10000
-message S2CSyncPos{
-repeated PbPlayerPos Lst	=	1;//用户位置信息列表
+message S2CGetNotice {
+uint32 Result = 1;  // 返回信息，0成功
+string Body   = 2;  // 系统公告内容
 }
 
-message S2CPlayerRemove{
-repeated uint32 Lst	=	1;//用户ID列表
+message PbPaoMaDengOne {
+uint32 TimeBegin       = 1;  // 跑马灯开始的utc时间
+uint32 TimeEnd         = 2;  // 跑马灯结束的utc时间
+uint32 TimeInterval    = 3;  // 循环播放的时间间隔（单位：秒），0表示不循环播放
+string Body            = 4;  // 内容
+repeated string LstStr = 5;  // 附加的字符串参数
+repeated int32 LstInt  = 6;  // 附加的数字参数，如果涉及浮点数坐标，数字为*100取整
+}
+
+message S2CGetPaoMaDengLst {
+uint32 Result               = 1;  // 返回信息，0成功
+repeated PbPaoMaDengOne Lst = 2;  // 跑马灯的列表
+}
+// 玩家位置信息
+message PbPlayerPos {
+uint32 UID           = 1;  // 用户ID
+PbPosition P = 2;
+}
+
+// 玩家简略信息
+message PbPlayerMin {
+uint32 UID                          = 1;  // 用户ID
+string Name                         = 2;  // 昵称
+uint32 Sex                          = 3;  // 性别
+repeated PbDresseds Dressed = 4;  // 穿戴信息
+uint32 LocalTime                    = 5;  // 服务器本地时间
+uint32 Action                       = 6;  // 用户行为，1站立、空闲，2行走，3跑，4跳
+}
+
+// 玩家详细信息
+message PbPlayerInfo {
+uint32 UID  = 1;  // 用户ID
+string Name = 2;  // 昵称
+}
+
+message C2SPlayerMove {
+uint32 UID                = 1;  // 用户ID
+PbPosition CurPos = 2;  // 当前位置
+}
+
+// 玩家广播数据
+//  S2C_MsgID=90@10000
+message S2CSyncPos {
+repeated PbPlayerPos Lst = 1;  // 用户位置信息列表
+}
+
+message S2CPlayerRemove {
+repeated uint32 Lst = 1;  // 用户ID列表
 }
 
 // 服务器发给客户端的玩家简略信息（场景显示玩家所需信息）
 // S2C_MsgID=90@10001
-message S2CPlayerMin{
-repeated PbPlayerMin Lst	=	1;
+message S2CPlayerMin {
+repeated PbPlayerMin Lst = 1;
 }
 
 // 客户端发给服务器，获取玩家详细信息
 // C2S_MsgID=90@1
-message C2SPlayerInfo{
-uint32 UID	=	1;	//用户ID
+message C2SPlayerInfo {
+uint32 UID = 1;  // 用户ID
 }
 
 // 服务器发给客户端的玩家详细信息（查看玩家详情所需信息）
 // S2C_MsgID=90@10002
-message S2CPlayerInfo{
-PbPlayerInfo Data	=	1;	//用户信息
+message S2CPlayerInfo {
+PbPlayerInfo Data = 1;  // 用户信息
 }
 
 // 客户端发给服务器，获取玩家详细信息
 // C2S_MsgID=90@3
-message C2SChangeAction{
-uint32 UID		=	1;	//用户ID
-uint32 Action	= 2;	//用户行为，1站立、空闲，2行走，3跑，4跳
+message C2SChangeAction {
+uint32 UID    = 1;  // 用户ID
+uint32 Action = 2;  // 用户行为，1站立、空闲，2行走，3跑，4跳
 }
 
 // 服务器发给客户端的玩家详细信息（查看玩家详情所需信息）
 // S2C_MsgID=90@10004
-message S2CChangeAction{
-uint32 UID		=	1;	//用户ID
-uint32 Action	= 2;	//用户行为
+message S2CChangeAction {
+uint32 UID    = 1;  // 用户ID
+uint32 Action = 2;  // 用户行为
+}
+
+// 客户端发给服务器，切换地图
+// C2S_MsgID=90@4
+message C2SChangeMap {
+uint32 MapId = 1;  // 目的地map id
+uint32 PosId = 2;  // 转跳点id
+}
+
+// 服务器发给客户端，回应切换地图
+// S2C_MsgID=90@10005
+message S2CChangeMap {
+uint32 Result             = 1;  // 返回信息，0成功，1失败
+uint32 MapId              = 2;  // 目的地map id
+uint32 PosId              = 3;  // 转跳点id，>0时有效，=0时CurPos有效
+PbPosition CurPos = 4;  // 退出战斗场景，同步进入战斗之前的位置信息
 }
 // 道具信息更新推送
 // S2C_MsgID=104@201
@@ -478,7 +576,7 @@ repeated uint32                newItems = 2; // 新的道具[uid]
 // 装备修复
 // C2S_MsgID=105@3
 message  C2SAvatarRepairReq {
-uint32   ChildId                     = 1; // 装备唯一ID
+uint32   ItemUid                     = 1; // 装备唯一ID
 repeated uint32   DressConsumeChildIds        = 2; // NFT装备消耗
 bool              NftRepair                   = 3; // 是否是NFT装备修复
 ItemConsumeRetReq ItemConsumeType = 4; // 普通修复消耗[非必填,nft装备不填]
@@ -488,21 +586,21 @@ ItemConsumeRetReq ItemConsumeType = 4; // 普通修复消耗[非必填,nft装备
 // S2C_MsgID=105@103
 message S2CAvatarRepairResp {
 AvatarRetResp result  = 1;  // 返回枚举值
-uint32              ChildId     = 2; // 唯一装备ID
+uint32              ItemUid     = 2; // 唯一装备ID
 uint32              Durable     = 3; // 装备耐久值
 }
 
 // 装备升级
 // C2S_MsgID=105@1
 message  C2SAvatarLevelUpReq {
-uint32            ChildId         = 1; // 装备唯一ID
+uint32            ItemUid         = 1; // 装备唯一ID
 }
 
 // 装备升级
 // S2C_MsgID=105@101
 message  S2CAvatarLevelUpResp {
 AvatarRetResp Result  = 1; // 返回枚举值
-uint32        ChildId             = 2; // 装备唯一ID
+uint32        ItemUid             = 2; // 装备唯一ID
 uint32        Level               = 3; // 装备等级
 uint32        Down                = 4; // 基础系数下限
 }
@@ -510,14 +608,14 @@ uint32        Down                = 4; // 基础系数下限
 // 装备升星
 // C2S_MsgID=105@2
 message  C2SAvatarStarUpReq {
-uint32 ChildId         = 1; // 装备唯一ID
+uint32 ItemUid         = 1; // 装备唯一ID
 }
 
 // 装备升级
 // S2C_MsgID=105@102
 message  S2CAvatarStarUpResp {
 AvatarRetResp   result  = 1; // 返回枚举值
-uint32          ChildId             = 2; // 装备唯一ID
+uint32          ItemUid             = 2; // 装备唯一ID
 uint32          Star                = 3; // 装备星级
 uint32          Up                  = 4; // 基础系数上限
 }
@@ -525,19 +623,32 @@ uint32          Up                  = 4; // 基础系数上限
 // 检测Avatar是否超过有效期
 // C2S_MsgID=100@15
 message C2SCkAvaterTimeOutByChildId {
-repeated uint32 childId = 1; // 需要检测的avatar childId
+repeated uint32 ItemUid = 1; // 需要检测的avatar childId
 }
 
 // 检测Avatar是否超过有效期 返回基本结构体
 message CkAvaterTimeOutByChildIdResp{
 bool            result = 1; // 状态 true 没有超时 false 已经超时
-uint32          childId= 2; // avatar子ID
+uint32          ItemUid= 2; // avatar子ID
 }
 
 // 返回检测Avatar是否超过有效期
 // S2C_MsgID=100@115
 message S2CCkAvaterTimeOutByChildIdResp {
 repeated CkAvaterTimeOutByChildIdResp resp = 1; // 返回检测结果
+}
+
+// 歌曲列表
+message S2CMusicList {
+repeated PbMusicInfo data = 1;
+}
+
+// 歌曲详细信息
+message PbMusicInfo {
+uint32 musicId = 1; // 歌曲Id
+uint32 number  = 2; // 获得分数
+uint32 phase   = 3; // 完成阶段
+bool isNew   = 4; // 是否为新
 }
 ]]
 }

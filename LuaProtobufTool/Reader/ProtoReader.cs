@@ -138,14 +138,18 @@ namespace LuaProtobufTool.Reader
                         {
                             var content = lines[p].Trim();
                             //去除content中的嵌套类结构
-                            //需要考虑诸如 repeated 嵌套类名.消息体 这种结构
+                            //需要考虑没有注释的情况
+                            //需要考虑诸如  嵌套类名.消息体 这种结构
+                            //如果.出现在注释符 // 后，则不需要处理(说明是在注释里面出现的.符号)
                             int index = content.IndexOf(".");
-                            if (index != -1)
+                            int annoSlashIndex = content.IndexOf("/");
+                            if ((index != -1 && (annoSlashIndex != -1 && index < annoSlashIndex)) ||
+                                (index != -1 && annoSlashIndex == -1))
                             {
                                 var firstSepIndex = content.IndexOf(' ');
-                                if (firstSepIndex != -1&& firstSepIndex<index)
+                                if (firstSepIndex != -1 && firstSepIndex < index)
                                 {
-                                    content = content.Remove(firstSepIndex+1, index - firstSepIndex);
+                                    content = content.Remove(firstSepIndex + 1, index - firstSepIndex);
                                 }
                                 else
                                 {

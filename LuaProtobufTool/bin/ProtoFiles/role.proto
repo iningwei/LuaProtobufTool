@@ -91,7 +91,7 @@ message S2CItemsInfoList {
 // 装备修复
 // C2S_MsgID=105@3
 message  C2SAvatarRepairReq {
-           uint32   ChildId                     = 1; // 装备唯一ID
+           uint32   ItemUid                     = 1; // 装备唯一ID
   repeated uint32   DressConsumeChildIds        = 2; // NFT装备消耗
   bool              NftRepair                   = 3; // 是否是NFT装备修复
   enumeration.ItemConsumeRetReq ItemConsumeType = 4; // 普通修复消耗[非必填,nft装备不填]
@@ -101,21 +101,21 @@ message  C2SAvatarRepairReq {
 // S2C_MsgID=105@103
 message S2CAvatarRepairResp {
   enumeration.AvatarRetResp result  = 1;  // 返回枚举值
-    uint32              ChildId     = 2; // 唯一装备ID
+    uint32              ItemUid     = 2; // 唯一装备ID
     uint32              Durable     = 3; // 装备耐久值
 }
 
 // 装备升级
 // C2S_MsgID=105@1
 message  C2SAvatarLevelUpReq {
-  uint32            ChildId         = 1; // 装备唯一ID
+  uint32            ItemUid         = 1; // 装备唯一ID
 }
 
 // 装备升级
 // S2C_MsgID=105@101
 message  S2CAvatarLevelUpResp {
   enumeration.AvatarRetResp Result  = 1; // 返回枚举值
-  uint32        ChildId             = 2; // 装备唯一ID
+  uint32        ItemUid             = 2; // 装备唯一ID
   uint32        Level               = 3; // 装备等级
   uint32        Down                = 4; // 基础系数下限
 }
@@ -123,14 +123,14 @@ message  S2CAvatarLevelUpResp {
 // 装备升星
 // C2S_MsgID=105@2
 message  C2SAvatarStarUpReq {
-  uint32 ChildId         = 1; // 装备唯一ID
+  uint32 ItemUid         = 1; // 装备唯一ID
 }
 
 // 装备升级
 // S2C_MsgID=105@102
 message  S2CAvatarStarUpResp {
   enumeration.AvatarRetResp   result  = 1; // 返回枚举值
-  uint32          ChildId             = 2; // 装备唯一ID
+  uint32          ItemUid             = 2; // 装备唯一ID
   uint32          Star                = 3; // 装备星级
   uint32          Up                  = 4; // 基础系数上限
 }
@@ -138,17 +138,30 @@ message  S2CAvatarStarUpResp {
 // 检测Avatar是否超过有效期
 // C2S_MsgID=100@15
 message C2SCkAvaterTimeOutByChildId {
-  repeated uint32 childId = 1; // 需要检测的avatar childId
+  repeated uint32 ItemUid = 1; // 需要检测的avatar childId
 }
 
 // 检测Avatar是否超过有效期 返回基本结构体
 message CkAvaterTimeOutByChildIdResp{
   bool            result = 1; // 状态 true 没有超时 false 已经超时
-  uint32          childId= 2; // avatar子ID
+  uint32          ItemUid= 2; // avatar子ID
 }
 
 // 返回检测Avatar是否超过有效期
 // S2C_MsgID=100@115
 message S2CCkAvaterTimeOutByChildIdResp {
     repeated CkAvaterTimeOutByChildIdResp resp = 1; // 返回检测结果
+}
+
+// 歌曲列表
+message S2CMusicList {
+  repeated PbMusicInfo data = 1;
+}
+
+// 歌曲详细信息
+message PbMusicInfo {
+  uint32 musicId = 1; // 歌曲Id
+  uint32 number  = 2; // 获得分数
+  uint32 phase   = 3; // 完成阶段
+    bool isNew   = 4; // 是否为新
 }

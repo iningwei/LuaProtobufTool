@@ -2,7 +2,7 @@
 local ProtoEnum={
 -- 点对点推送 枚举
 PTPResp= {
-PTP_AVATAR_TIME_OUT = 0; -- 用户装扮到期
+PTP_AVATAR_TIME_OUT = 0;  -- 用户装扮到期
 }
 ,
 -- 用户登录枚举值
@@ -40,6 +40,7 @@ PRR_ERR_NOT_USE_ITEM            = 4; -- 物品不能使用
 PRR_ERR_NOT_SPLIT_ITEM          = 5; -- 物品不能分解
 PRR_ERR_NOT_UNLOCK_ITEM         = 6; -- 物品不能解锁
 PRR_ERR_REQUEST_PARAMETER       = 7; -- 请求参数错误
+PRR_ERR_BAG_CAPACITY_NOT_ENOUGH = 8; -- 背包容量不足
 }
 ,
 -- 合成枚举值
@@ -69,16 +70,19 @@ RRR_PHONE_ERR           = 10;-- 角色手机号错误
 ,
 AvatarRetResp=
 {
-RER_ERROR             = 0; -- 错误
-RER_SUCCESS           = 1; -- 成功
-RER_NO_NEED_REPAIR    = 2; -- 装备不需要修复
-RER_MAX_DURABLE       = 3; -- 装备耐久度已满
-RER_NO_ENOUGH_STAR    = 4; -- 装备星级不够
-RER_NO_ENOUGH_LEVEL   = 5; -- 装备等级不够
-RER_NO_Dress          = 6; -- 没有装备
-RER_FAILED            = 7; -- 养成失败
-RER_NO_ENOUGH_ITEM    = 8; -- 养成道具不足
-RER_DEL_ITEM_ERROR    = 9; -- 扣除道具失败
+RER_ERROR                   = 0; -- 错误
+RER_SUCCESS                 = 1; -- 成功
+RER_NO_NEED_REPAIR          = 2; -- 装备不需要修复
+RER_MAX_DURABLE             = 3; -- 装备耐久度已满
+RER_NO_ENOUGH_STAR          = 4; -- 装备星级不够
+RER_NO_ENOUGH_LEVEL         = 5; -- 装备等级不够
+RER_NO_Dress                = 6; -- 没有装备
+RER_FAILED                  = 7; -- 养成失败
+RER_NO_ENOUGH_ITEM          = 8; -- 养成道具不足
+RER_DEL_ITEM_ERROR          = 9; -- 扣除道具失败
+RER_REQUEST_PARAMETER_ERROR = 10;-- 请求参数错误
+RER_MAX_STAR                = 11;-- 装备星级已满
+RER_MAX_Level               = 12;-- 装备等级已满
 }
 ,
 ItemConsumeRetReq=
@@ -87,5 +91,10 @@ Q_PLUME = 0; -- 消耗羽毛
 Q_GOLD  = 1; -- 消耗金币
 }
 ,
+MailTypeResp=
+{
+MAIL_NORMAL = 0; -- 用户邮件
+MAIL_OFGM   = 1; -- GM邮件
+},
 }
 return ProtoEnum
