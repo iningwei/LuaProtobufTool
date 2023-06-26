@@ -94,7 +94,6 @@ namespace LuaProtobufTool.Reader
                             if (anotationLine.StartsWith("//") && anotationLine.Contains("_MsgID") == false)
                             {
                                 anotationIndex = j;
-                                break;
                             }
                             else
                             {
